@@ -1,0 +1,134 @@
+* {
+    $general-transition: .5s ease   ;
+
+    transition:
+        background-color $general-transition,
+        border-color $general-transition,
+        color $general-transition;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    color: black;
+}
+
+.page-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid black;
+    background-color: darken(white, 10%);
+}
+
+main {
+    max-width: 70vmin;
+    max-height: 70vmin;
+    position: relative;
+
+    $base-gap: 5px;
+
+    .game-field {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        gap: $base-gap;
+
+        .turn-label {
+            width: 100%;
+            justify-content: center;
+            display: flex;
+            gap: 10px;
+            font-size: 200%;
+        }
+
+        .game-row {
+            display: flex;
+            gap: $base-gap;
+            .game-cell {
+                width: 100px;
+                height: 100px;
+                fill: transparent;
+
+                & > path {
+                    cursor: pointer;
+                }
+
+                stroke: black;
+                stroke-width: 1.5px;
+                &.cell-x { fill: transparentize(dodgerblue, 0.6); }
+                &.cell-o { fill: transparentize(firebrick, 0.6); }
+            }
+        }
+    }
+    
+    .end-screen {
+        position: absolute;
+        width: calc(100% + 2 * $base-gap);
+        height: calc(100% + 2 * $base-gap);
+        left: -$base-gap;
+        top: -$base-gap;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .5s ease;
+
+        .game-over-label {
+            font-size: 300%;
+        }
+
+        .restart-btn {
+            padding: 5px 10px;
+            font-size: 200%;
+            background-color: #4caf50;
+            color: black;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        &.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
+
+.theme-dark {
+    background-color: lighten(black, 20%);
+    color: white;
+
+    .page-header {
+        border-bottom-color: white;
+        background-color: lighten(black, 30%);
+    }
+
+    .game-field > .game-row > .game-cell {
+        stroke: white;
+
+        &.cell-x { color: aquamarine; }
+        &.cell-o { color: crimson; }
+    }
+
+    .end-screen .restart-btn {
+        color: white;
+    }
+}
